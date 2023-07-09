@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     PluginCritical.default({
-      criticalUrl: "https://semro.github.io/shri2023-task/",
+      criticalUrl: "../index.html",
       criticalBase: "../",
       criticalPages: [{ uri: "", template: "index" }],
       criticalConfig: {
