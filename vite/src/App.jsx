@@ -56,20 +56,8 @@ function Header() {
 }
 
 function Event(props) {
-  const ref = useRef();
-
-  const { onSize } = props;
-
-  useEffect(() => {
-    const width = ref.current.offsetWidth;
-    const height = ref.current.offsetHeight;
-    if (onSize) {
-      onSize({ width, height });
-    }
-  });
-
   return (
-    <li ref={ref} className={"event" + (props.slim ? " event_slim" : "")}>
+    <li className={"event" + (props.slim ? " event_slim" : "")}>
       <button className="event__button">
         <span
           className={`event__icon event__icon_${props.icon}`}
@@ -102,24 +90,25 @@ function FavoriteDevices() {
     setActiveTab(event.target.value);
   };
 
-  let sizes = [];
-  const onSize = (size) => {
-    sizes = [...sizes, size];
-  };
-
   useEffect(() => {
-    const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
+    const scroller = ref.current.querySelector(
+      ".section__panel:not(.section__panel_hidden)"
+    );
 
-    const newHasRightScroll = sumWidth > ref.current.offsetWidth;
-    if (newHasRightScroll !== hasRightScroll) {
-      setHasRightScroll(newHasRightScroll);
+    if (scroller) {
+      const newHasRightScroll = scroller.scrollWidth > ref.current.offsetWidth;
+      if (newHasRightScroll !== hasRightScroll) {
+        setHasRightScroll(newHasRightScroll);
+      }
     }
+
   });
 
   const onArrowCLick = () => {
     const scroller = ref.current.querySelector(
       ".section__panel:not(.section__panel_hidden)"
     );
+
     if (scroller) {
       scroller.scrollTo({
         left: scroller.scrollLeft + 400,
@@ -181,7 +170,7 @@ function FavoriteDevices() {
           >
             <ul className="section__panel-list">
               {TABS[key].items.map((item, index) => (
-                <Event key={index} {...item} onSize={onSize} />
+                <Event key={index} {...item} />
               ))}
             </ul>
           </div>
