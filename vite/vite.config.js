@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import preact from "@preact/preset-vite";
 import PluginCritical from "rollup-plugin-critical";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
@@ -8,7 +8,7 @@ import VitePluginInjectPreload from "vite-plugin-inject-preload";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    preact(),
     ViteImageOptimizer(),
     VitePluginInjectPreload({
       files: [
@@ -30,4 +30,8 @@ export default defineConfig({
     outDir: "../",
   },
   base: "/shri2023-task/",
+  alias: {
+    react: "preact-compat",
+    "react-dom": "preact-compat",
+  },
 });
