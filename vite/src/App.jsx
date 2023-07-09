@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import { block } from "million/react";
 
-function Header() {
+const Header = block(function Header() {
   let [expanded, setExpanded] = useState(false);
   let [toggled, setToggled] = useState(false);
 
@@ -53,25 +54,29 @@ function Header() {
       </ul>
     </header>
   );
-}
+});
 
-function Event(props) {
+const EventButton = block(function EventButton(props) {
+  return <button className="event__button">
+    <span
+      className={"event__icon event__icon_"+props.icon}
+      role="img"
+      aria-label={props.iconLabel}
+    ></span>
+    <h4 className="event__title">{props.title}</h4>
+    {props.subtitle && (
+      <span className="event__subtitle">{props.subtitle}</span>
+    )}
+  </button>;
+})
+
+const Event = block(function Event({slim, ...props}) {
   return (
-    <li className={"event" + (props.slim ? " event_slim" : "")}>
-      <button className="event__button">
-        <span
-          className={`event__icon event__icon_${props.icon}`}
-          role="img"
-          aria-label={props.iconLabel}
-        ></span>
-        <h4 className="event__title">{props.title}</h4>
-        {props.subtitle && (
-          <span className="event__subtitle">{props.subtitle}</span>
-        )}
-      </button>
+    <li className={"event" + (slim? " event_slim" : "")}>
+      <EventButton {...props}/>
     </li>
   );
-}
+});
 
 function FavoriteDevices() {
   const ref = useRef();
@@ -101,7 +106,6 @@ function FavoriteDevices() {
         setHasRightScroll(newHasRightScroll);
       }
     }
-
   });
 
   const onArrowCLick = () => {
@@ -317,7 +321,7 @@ for (let i = 0; i < 6; ++i) {
 }
 const TABS_KEYS = Object.keys(TABS);
 
-function Main() {
+const Main = block(function Main() {
   return (
     <main className="main">
       <section className="section main__general">
@@ -417,7 +421,7 @@ function Main() {
       <FavoriteDevices />
     </main>
   );
-}
+})
 
 function App() {
   return (

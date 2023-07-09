@@ -1,13 +1,16 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
+import million from 'million/compiler';
 import PluginCritical from "rollup-plugin-critical";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
-
 import VitePluginInjectPreload from "vite-plugin-inject-preload";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    million.vite({
+      mode: "preact",
+    }),
     preact(),
     ViteImageOptimizer(),
     VitePluginInjectPreload({
