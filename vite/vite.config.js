@@ -3,11 +3,20 @@ import react from "@vitejs/plugin-react";
 import PluginCritical from "rollup-plugin-critical";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
+import VitePluginInjectPreload from "vite-plugin-inject-preload";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     ViteImageOptimizer(),
+    VitePluginInjectPreload({
+      files: [
+        {
+          match: /[a-zA-Z0-9]*.[webp|svg|png|jpg]$/,
+        },
+      ],
+    }),
     PluginCritical.default({
       criticalUrl: "../index.html",
       criticalBase: "../",
